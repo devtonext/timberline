@@ -1,0 +1,27 @@
+create table if not exists public.site_content(key text primary key,data jsonb not null default '{}',updated_at timestamptz default now());
+create table if not exists public.admin_users(user_id uuid primary key references auth.users on delete cascade,email text);
+create or replace function public.is_admin() returns boolean language sql security definer stable as $$select exists(select 1 from public.admin_users where user_id=auth.uid())$$;
+create or replace function public.admin_exists() returns boolean language sql security definer stable as $$select exists(select 1 from public.admin_users)$$;
+create or replace function public.first_admin() returns trigger language plpgsql security definer as $$begin if not exists(select 1 from public.admin_users) then insert into public.admin_users values(new.id,new.email);end if;return new;end$$;
+drop trigger if exists on_first_admin on auth.users;create trigger on_first_admin after insert on auth.users for each row execute function public.first_admin();
+create table if not exists public.stats(id uuid primary key default gen_random_uuid(),sort_order int default 0,published boolean default true,value text,suffix text,label text,image text,created_at timestamptz default now(),updated_at timestamptz default now());
+create table if not exists public.features(id uuid primary key default gen_random_uuid(),sort_order int default 0,published boolean default true,title text,text text,image text,created_at timestamptz default now(),updated_at timestamptz default now());
+create table if not exists public.projects(id uuid primary key default gen_random_uuid(),sort_order int default 0,published boolean default true,title text,price text,image text,description text,created_at timestamptz default now(),updated_at timestamptz default now());
+create table if not exists public.payments(id uuid primary key default gen_random_uuid(),sort_order int default 0,published boolean default true,title text,text text,created_at timestamptz default now(),updated_at timestamptz default now());
+create table if not exists public.steps(id uuid primary key default gen_random_uuid(),sort_order int default 0,published boolean default true,title text,text text,created_at timestamptz default now(),updated_at timestamptz default now());
+create table if not exists public.inquiries(id uuid primary key default gen_random_uuid(),status text not null default 'new' check(status in('new','read','done')),name text check(char_length(name)<=120),email text check(char_length(email)<=200),phone text check(char_length(phone)<=60),message text check(char_length(message)<=4000),created_at timestamptz default now());
+create index if not exists inquiries_created on public.inquiries(created_at);
+do $$ declare t text;begin
+ foreach t in array array['site_content','admin_users','stats','features','projects','payments','steps','inquiries'] loop execute format('alter table public.%I enable row level security',t);end loop;
+ foreach t in array array['stats','features','projects','payments','steps'] loop
+  execute format('create index if not exists %I on public.%I(sort_order)',t||'_sort',t);
+  execute format('drop policy if exists "read published" on public.%I',t);execute format('create policy "read published" on public.%I for select using(published or public.is_admin())',t);
+  execute format('drop policy if exists "admin all" on public.%I',t);execute format('create policy "admin all" on public.%I for all using(public.is_admin()) with check(public.is_admin())',t);end loop;end$$;
+drop policy if exists "read content" on public.site_content;create policy "read content" on public.site_content for select using(true);
+drop policy if exists "admin content" on public.site_content;create policy "admin content" on public.site_content for all using(public.is_admin()) with check(public.is_admin());
+drop policy if exists "admin users" on public.admin_users;create policy "admin users" on public.admin_users for all using(public.is_admin()) with check(public.is_admin());
+drop policy if exists "public submit" on public.inquiries;create policy "public submit" on public.inquiries for insert to anon,authenticated with check(status='new');
+drop policy if exists "admin inquiries" on public.inquiries;create policy "admin inquiries" on public.inquiries for all using(public.is_admin()) with check(public.is_admin());
+insert into storage.buckets(id,name,public) values('media','media',true) on conflict do nothing;
+drop policy if exists "media read" on storage.objects;create policy "media read" on storage.objects for select using(bucket_id='media');
+drop policy if exists "media admin" on storage.objects;create policy "media admin" on storage.objects for all using(bucket_id='media' and public.is_admin()) with check(bucket_id='media' and public.is_admin());
