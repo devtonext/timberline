@@ -1,5 +1,11 @@
-import {useState} from 'react';import {useSite} from '../lib/site.jsx';
-export default function Projects(){const{collections:k}=useSite();const[q,setQ]=useState('');
- const rows=k.projects.filter(p=>(p.title+p.description).toLowerCase().includes(q.toLowerCase()));
- return <section className="page"><h1>Our projects</h1><input className="in" placeholder="Search projects…" value={q} onChange={e=>setQ(e.target.value)}/>
- <div className="grid4">{rows.map(p=><article key={p.id} className="proj tall"><img src={p.image} alt={p.title}/><div><b>{p.title}</b><small>{p.price}</small><small>{p.description}</small></div></article>)}{!rows.length&&<p>No projects found.</p>}</div></section>}
+import {useState,useEffect} from 'react';import {useSite} from '../lib/site.jsx';import {Lines,SmartLink} from '../components/Layout.jsx';
+import {Why,Process,Financing,Testimonials,FAQ,CTA} from '../components/Sections.jsx';
+export default function Projects(){const{content:c,collections:k}=useSite();const p=c.projects_page;const[q,setQ]=useState(''),[cat,setCat]=useState('All'),[sel,setSel]=useState(null);
+ const cats=['All',...new Set(k.projects.map(x=>x.category).filter(Boolean))];
+ const rows=k.projects.filter(x=>(cat==='All'||x.category===cat)&&((x.title||'')+(x.description||'')).toLowerCase().includes(q.toLowerCase()));
+ useEffect(()=>{const f=e=>e.key==='Escape'&&setSel(null);addEventListener('keydown',f);return()=>removeEventListener('keydown',f)},[]);
+ return <><section className="hero"><div className="panel hero-l"><Lines as="h1" text={p.title}/><p>{p.text}</p><div className="stats">{k.stats.map(s=><div className="stat" key={s.id}><b>{s.value}<em>{s.suffix}</em></b><span>{s.label}</span></div>)}</div></div><div className="hero-r"><img src={p.image} alt=""/></div></section>
+ <section className="blk"><div className="toolbar"><div className="chipsf">{cats.map(x=><button key={x} className={cat===x?'on':''} onClick={()=>setCat(x)}>{x}</button>)}</div><input className="in" placeholder="Search projects…" value={q} onChange={e=>setQ(e.target.value)}/></div>
+ <div className="grid3 pg">{rows.map(x=><article key={x.id} className="proj tall" tabIndex="0" role="button" onClick={()=>setSel(x)} onKeyDown={e=>e.key==='Enter'&&setSel(x)}><img src={x.image} alt={x.title}/>{x.category&&<span className="tag">{x.category}</span>}<div><b>{x.title}</b><small>{x.price}</small></div></article>)}{!rows.length&&<p>No projects found.</p>}</div></section>
+ <Why/><Process/><Financing/><Testimonials/><FAQ/><CTA/>
+ {sel&&<div className="pm-back" onClick={()=>setSel(null)}><div className="pm" onClick={e=>e.stopPropagation()}><img src={sel.image} alt={sel.title}/><div className="pm-b"><small>{sel.category}</small><h2>{sel.title}</h2><p>{sel.description}</p><b>{sel.price}</b><div className="row2"><SmartLink to={'/contact?msg='+encodeURIComponent('I am interested in: '+sel.title)} className="pill dark">Request this project <i/></SmartLink><button className="pill ghost" onClick={()=>setSel(null)}>Close</button></div></div></div></div>}</>}

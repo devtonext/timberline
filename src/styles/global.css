@@ -55,3 +55,10 @@ a{color:inherit;text-decoration:none}:focus-visible{outline:2px solid var(--acce
 .mission{margin-top:20px;display:grid;gap:8px}.mission p{max-width:620px}
 .foot{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px}.foot>div{display:flex;flex-direction:column;gap:8px}.foot .copy{grid-column:1/-1;margin:0;font-size:12px;border-top:1px solid #eee;padding-top:16px}
 @media(max-width:860px){.foot{grid-template-columns:1fr}.cta{padding:40px 24px}}
+.foot{grid-template-columns:1.4fr repeat(auto-fit,minmax(130px,1fr))}
+.toolbar{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:22px}.toolbar .in{width:240px;margin:0}
+.chipsf{display:flex;gap:8px;flex-wrap:wrap}.chipsf button{border:1px solid #ddd;background:#fff;border-radius:999px;padding:9px 18px;font:600 13px Manrope;cursor:pointer;transition:all .25s}.chipsf button:hover{border-color:var(--accent);transform:translateY(-2px)}.chipsf button.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+.pg .proj{cursor:pointer;aspect-ratio:4/5}.tag{position:absolute;top:14px;left:14px;background:#fffd;color:var(--primary);font-size:11px;font-weight:700;border-radius:999px;padding:5px 12px;backdrop-filter:blur(6px)}
+.pm-back{position:fixed;inset:0;background:#000a;display:grid;place-items:center;z-index:60;padding:16px;animation:fd .3s}.pm{background:#fff;border-radius:28px;width:min(860px,100%);max-height:92vh;overflow:auto;display:grid;grid-template-columns:1fr 1fr;animation:pp .35s cubic-bezier(.2,.7,.2,1)}.pm img{width:100%;height:100%;object-fit:cover;min-height:300px}.pm-b{padding:34px;display:flex;flex-direction:column;gap:10px;justify-content:center}.pm-b small{color:var(--accent);font-weight:700;text-transform:uppercase;font-size:11px}.pm-b h2{margin:0}.pm-b b{font-size:20px}.row2{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+@keyframes fd{from{opacity:0}}@keyframes pp{from{opacity:0;transform:translateY(24px) scale(.97)}}
+@media(max-width:860px){.pm{grid-template-columns:1fr}.pm img{min-height:220px;max-height:260px}.toolbar .in{width:100%}}

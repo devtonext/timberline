@@ -18,23 +18,29 @@ function SectionCard({id,title,fields}){const{content,reload}=useSite();const to
  return <div className="acard"><div className="ach"><b>{title}</b>{dirty&&<em className="badge">Unsaved</em>}<span><button className="btn ghost" disabled={!dirty} onClick={()=>setD(JSON.parse(sig))}>Discard</button><button className="btn" disabled={!dirty} onClick={save}>Save</button></span></div>
  <div className="fgrid">{fields.map(f=><Field key={f[0]} f={f} v={d[f[0]]} set={v=>setD({...d,[f[0]]:v})}/>)}</div></div>}
 
-function PageEditor(){const{page}=useParams();const p=PAGES[page];if(!p)return <p>Page not found.</p>;
- return <><div className="ph1"><h1>{p.label}</h1><Link className="btn ghost" to={p.path} target="_blank">Preview page ↗</Link></div>{p.sections.map(s=><SectionCard key={page+s[0]} id={s[0]} title={s[1]} fields={s[2]}/>)}</>}
+function PageEditor(){const{page}=useParams();const p=PAGES[page];const[i,setI]=useState(0);useEffect(()=>setI(0),[page]);if(!p)return <p>Page not found.</p>;
+ const S=p.sections,n=Math.min(i,S.length-1),s=S[n];const go=x=>{setI(x);window.scrollTo({top:0,behavior:'smooth'})};
+ return <><div className="ph1"><h1>{p.label}</h1>{p.path&&<Link className="btn ghost" to={p.path} target="_blank">Preview page ↗</Link>}</div>
+ <ol className="steps2">{S.map((x,k)=><li key={k}><button className={k===n?'on':k<n?'done':''} onClick={()=>go(k)}><span>{k<n?'✓':k+1}</span>{x.title}</button></li>)}</ol>
+ <div className="stephead"><small>Section {n+1} of {S.length}</small><h2>{s.title}</h2>{s.hint&&<p>{s.hint}</p>}</div>
+ {(s.content||[]).map(c=><SectionCard key={page+n+c[0]+c[1]} id={c[0]} title={c[1]} fields={c[2]}/>)}
+ {(s.collections||[]).map(c=><Collection key={page+n+c[0]} table={c[0]} label={c[1]} inline/>)}
+ <div className="stepnav"><button className="btn ghost" disabled={n===0} onClick={()=>go(n-1)}>← Previous section</button><span>{n+1} / {S.length}</span><button className="btn" disabled={n===S.length-1} onClick={()=>go(n+1)}>Next section →</button></div></>}
 
 function Modal({title,onClose,children}){useEffect(()=>{const k=e=>e.key==='Escape'&&onClose();addEventListener('keydown',k);return()=>removeEventListener('keydown',k)},[onClose]);
  return <div className="mback" onClick={onClose}><div className="modal" onClick={e=>e.stopPropagation()}><div className="ach"><b>{title}</b><button className="btn ghost" onClick={onClose}>✕</button></div>{children}</div></div>}
 
-function Collection(){const{table}=useParams();const C=COLLECTIONS[table];const{reload}=useSite();const toast=useToast();
+function Collection({table:tp,label,inline}){const prm=useParams();const table=tp||prm.table;const C=COLLECTIONS[table];const{reload}=useSite();const toast=useToast();
  const[rows,setRows]=useState(null),[q,setQ]=useState(''),[edit,setEdit]=useState(null),[d,setD]=useState({});
  const load=useCallback(async()=>setRows(await api.list(table,{admin:true})),[table]);useEffect(()=>{setRows(null);load()},[load]);
- if(!C)return <p>Not found.</p>;
+ if(!C)return <p>Not found.</p>;const H=inline?'h3':'h1';
  const done=async m=>{await load();await reload();m&&toast(m)};
  const run=(fn,m)=>fn().then(()=>done(m)).catch(e=>toast(e.message,1));
  const move=(i,x)=>{const a=rows[i],b=rows[i+x];if(!b)return;run(async()=>{await api.update(table,a.id,{sort_order:b.sort_order===a.sort_order?a.sort_order+x:b.sort_order});await api.update(table,b.id,{sort_order:a.sort_order})})};
  const open=r=>{setD(r?{...r}:{});setEdit(r||{})};
  const save=()=>{const{id,created_at,updated_at,...x}=d;run(async()=>{id?await api.update(table,id,x):await api.insert(table,{...x,sort_order:(rows?.length||0)+1});setEdit(null)},'Saved')};
  const list=(rows||[]).filter(r=>String(r[C.title]).toLowerCase().includes(q.toLowerCase()));
- return <><div className="ph1"><h1>{C.label} <small>{rows?rows.length:'…'} items</small></h1><span className="row"><input className="srch" placeholder="Search…" value={q} onChange={e=>setQ(e.target.value)}/><button className="btn" onClick={()=>open(null)}>+ Add</button></span></div>
+ return <><div className="ph1"><H>{label||C.label} <small>{rows?rows.length:'…'} items</small></H><span className="row"><input className="srch" placeholder="Search…" value={q} onChange={e=>setQ(e.target.value)}/><button className="btn" onClick={()=>open(null)}>+ Add</button></span></div>
  {!rows?<div className="skel"/>:<div className="acard lst">{list.map(r=>{const i=rows.indexOf(r);return <div className="item" key={r.id}>
   {C.img&&r[C.img]?<img src={r[C.img]} alt=""/>:<span className="noimg"/>}<b className="t">{String(r[C.title]).replace(/\n/g,' ')}</b>
   <button className={'tg '+(r.published?'on':'')} onClick={()=>run(()=>api.update(table,r.id,{published:!r.published}))}>{r.published?'Live':'Hidden'}</button>
@@ -82,7 +88,7 @@ export default function AdminApp(){const[st,setSt]=useState('loading'),[create,s
  const L=({to,children})=><NavLink to={to} end onClick={()=>setNav(false)}>{children}</NavLink>;
  return <TC.Provider value={t}><div className="adm"><aside className={nav?'open':''}><Link to="/admin" className="alogo">Timberline <small>Admin</small></Link>
  <L to="/admin">Overview</L><h4>Pages</h4>{Object.entries(PAGES).map(([k,p])=><L key={k} to={'/admin/pages/'+k}>{p.label}</L>)}
- <h4>Collections</h4>{Object.entries(COLLECTIONS).map(([k,c])=><L key={k} to={'/admin/c/'+k}>{c.label}</L>)}<h4>Inbox</h4><L to="/admin/inbox">Messages</L><h4>System</h4><L to="/admin/setup">Setup</L></aside>
+ <h4>Inbox</h4><L to="/admin/inbox">Messages</L><h4>System</h4><L to="/admin/setup">Setup</L></aside>
  <div className="amain"><header className="atop"><button className="burger2" onClick={()=>setNav(!nav)}>☰</button><span className="badge">{isDemo?'Demo mode':'Connected to Supabase'}</span><span className="sp"/><Link className="btn ghost" to="/" target="_blank">View site ↗</Link><span className="av">{(email||'A')[0].toUpperCase()}</span><button className="btn ghost" onClick={async()=>{await api.signOut();check()}}>Sign out</button></header>
  <div className="acont"><Routes><Route index element={<Overview/>}/><Route path="pages/:page" element={<PageEditor/>}/><Route path="c/:table" element={<Collection/>}/><Route path="inbox" element={<Inbox/>}/><Route path="setup" element={<Setup/>}/></Routes></div></div>
  {toast&&<div className={'toast'+(toast.bad?' bad':'')}>{toast.m}</div>}</div></TC.Provider>}
