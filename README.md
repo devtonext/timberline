@@ -14,4 +14,7 @@ Import the repo, add env vars BEFORE deploying, redeploy after changes, set the 
 All text/images live in `src/lib/defaults.js` (sections + collections). Add a field there, then use it in a page and rerun `build:sql`.
 
 ## Not yet included
-Admin dashboard (`/admin`), blog/detail pages, Playwright tests. Demo photos are from Unsplash — replace before selling.
+Blog/detail pages, a media library page, Playwright tests. Demo photos are from Unsplash — replace before selling.
+
+## Admin
+Visit `/admin`. Demo login: `admin@demo.com` / `demo1234`. Pages and collections are driven by `src/admin/schema.js` — add a field there to make it editable.

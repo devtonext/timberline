@@ -11,9 +11,13 @@ create table if not exists public.payments(id uuid primary key default gen_rando
 create table if not exists public.steps(id uuid primary key default gen_random_uuid(),sort_order int default 0,published boolean default true,title text,text text,created_at timestamptz default now(),updated_at timestamptz default now());
 create table if not exists public.inquiries(id uuid primary key default gen_random_uuid(),status text not null default 'new' check(status in('new','read','done')),name text check(char_length(name)<=120),email text check(char_length(email)<=200),phone text check(char_length(phone)<=60),message text check(char_length(message)<=4000),created_at timestamptz default now());
 create index if not exists inquiries_created on public.inquiries(created_at);
+create table if not exists public.services(id uuid primary key default gen_random_uuid(),sort_order int default 0,published boolean default true,icon text,title text,text text,created_at timestamptz default now(),updated_at timestamptz default now());
+create table if not exists public.team(id uuid primary key default gen_random_uuid(),sort_order int default 0,published boolean default true,name text,role text,image text,created_at timestamptz default now(),updated_at timestamptz default now());
+create table if not exists public.testimonials(id uuid primary key default gen_random_uuid(),sort_order int default 0,published boolean default true,name text,role text,quote text,image text,created_at timestamptz default now(),updated_at timestamptz default now());
+create table if not exists public.faqs(id uuid primary key default gen_random_uuid(),sort_order int default 0,published boolean default true,question text,answer text,created_at timestamptz default now(),updated_at timestamptz default now());
 do $$ declare t text;begin
- foreach t in array array['site_content','admin_users','stats','features','projects','payments','steps','inquiries'] loop execute format('alter table public.%I enable row level security',t);end loop;
- foreach t in array array['stats','features','projects','payments','steps'] loop
+ foreach t in array array['site_content','admin_users','stats','features','projects','payments','steps','services','team','testimonials','faqs','inquiries'] loop execute format('alter table public.%I enable row level security',t);end loop;
+ foreach t in array array['stats','features','projects','payments','steps','services','team','testimonials','faqs'] loop
   execute format('create index if not exists %I on public.%I(sort_order)',t||'_sort',t);
   execute format('drop policy if exists "read published" on public.%I',t);execute format('create policy "read published" on public.%I for select using(published or public.is_admin())',t);
   execute format('drop policy if exists "admin all" on public.%I',t);execute format('create policy "admin all" on public.%I for all using(public.is_admin()) with check(public.is_admin())',t);end loop;end$$;

@@ -7,7 +7,14 @@ hero:{title:'A ready timber-frame home\nfrom 1,100 sq ft, turnkey in 2 months',t
 tech:{title:'We build homes\nusing timber-frame technology',text:'Cottages and saunas built with timber-frame technology are popular worldwide, and some have stood for centuries.',image:img('photo-1503387762-592deb58ef4e',1000)},
 catalog:{title:'Our project catalog\nfor 2024',side_title:'Timber-frame construction',side_sub:'at the peak of its popularity',cta_label:'View catalog'},
 payments:{title:'Ways to pay'},
-steps:{title:'Three steps to your new home'}};
+steps:{title:'Three steps to your new home'},
+about:{title:'Honest timber homes,\nbuilt since 2013',text:'We are a team of architects, carpenters and engineers who believe a house should be warm, durable and kind to the planet. Every frame is prefabricated in our workshop and assembled on site in weeks, not years.',image:img('photo-1518780664697-55e3ad937233',1000),mission_title:'Our mission',mission_text:'To make high-quality, energy-efficient timber homes accessible to every family, with fixed prices and fixed deadlines.'},
+services_page:{title:'Everything you need\nto build with timber',text:'From the first sketch to the final key handover, one team takes care of design, construction and finishing.',image:img('photo-1503387762-592deb58ef4e',1000)},
+services_sec:{title:'What we do',text:'Complete timber-frame building services under one contract.'},
+testimonials_sec:{title:'Families who moved in'},
+team_sec:{title:'The people behind your home'},
+faq_sec:{title:'Frequently asked questions'},
+cta:{title:'Ready to plan your timber home?',text:'Book a free consultation and get a project estimate within 48 hours.',button:'Book a consultation',link:'/contact',image:img('photo-1448630360428-65456885c650',1400)}};
 export const defaultCollections={
 stats:[{id:'s1',sort_order:1,published:true,value:'65',suffix:'~',label:'average days to build',image:img('photo-1480074568708-e7b720bb3f09',200)},
 {id:'s2',sort_order:2,published:true,value:'7',suffix:'+',label:'years of warranty on every home',image:img('photo-1449844908441-8829872d2607',200)},
@@ -25,5 +32,23 @@ payments:[{id:'m1',sort_order:1,published:true,title:'Home loan',text:'We partne
 {id:'m4',sort_order:4,published:true,title:'Bank transfer',text:'Sign a contract with the company and pay for work by invoice.'}],
 steps:[{id:'t1',sort_order:1,published:true,title:'Consultation\nand design',text:'Share your wishes and budget, and get a tailored project proposal.'},
 {id:'t2',sort_order:2,published:true,title:'Construction',text:'Our team builds the frame house on schedule with quality control.'},
-{id:'t3',sort_order:3,published:true,title:'Finishing',text:'We complete interior and exterior finishing and hand over the keys.'}]};
+{id:'t3',sort_order:3,published:true,title:'Finishing',text:'We complete interior and exterior finishing and hand over the keys.'}],
+services:[{id:'v1',sort_order:1,published:true,icon:'📐',title:'Custom design',text:'Architectural plans adapted to your plot, budget and lifestyle.'},
+{id:'v2',sort_order:2,published:true,icon:'🪵',title:'Timber-frame construction',text:'Precision prefabricated frames assembled on site in weeks.'},
+{id:'v3',sort_order:3,published:true,icon:'🔑',title:'Turnkey finishing',text:'Interior and exterior finishing, so you simply move in.'},
+{id:'v4',sort_order:4,published:true,icon:'🌿',title:'Eco insulation',text:'Natural insulation that cuts heating costs by up to 40%.'},
+{id:'v5',sort_order:5,published:true,icon:'♨️',title:'Saunas and bathhouses',text:'Compact timber bathhouses and garden saunas.'},
+{id:'v6',sort_order:6,published:true,icon:'🛡️',title:'Warranty and service',text:'A 7-year structural warranty and yearly inspections.'}],
+team:[{id:'e1',sort_order:1,published:true,name:'Daniel Hayes',role:'Founder & lead architect',image:'https://randomuser.me/api/portraits/men/32.jpg'},
+{id:'e2',sort_order:2,published:true,name:'Sofia Marin',role:'Head of construction',image:'https://randomuser.me/api/portraits/women/44.jpg'},
+{id:'e3',sort_order:3,published:true,name:'Marcus Reed',role:'Project manager',image:'https://randomuser.me/api/portraits/men/75.jpg'},
+{id:'e4',sort_order:4,published:true,name:'Elena Novak',role:'Interior designer',image:'https://randomuser.me/api/portraits/women/68.jpg'}],
+testimonials:[{id:'r1',sort_order:1,published:true,name:'Laura & Tom Bennett',role:'Cedar Ridge cabin',quote:'We moved in 9 weeks after signing. The house is warm, quiet and exactly what we drew.',image:'https://randomuser.me/api/portraits/women/12.jpg'},
+{id:'r2',sort_order:2,published:true,name:'Michael Torres',role:'Lakeside family home',quote:'Fixed price, fixed deadline, and they kept both. Heating bills are half of our old house.',image:'https://randomuser.me/api/portraits/men/46.jpg'},
+{id:'r3',sort_order:3,published:true,name:'Priya Shah',role:'Forest studio',quote:'The team was transparent at every step. The finishing quality surprised even my architect.',image:'https://randomuser.me/api/portraits/women/65.jpg'}],
+faqs:[{id:'q1',sort_order:1,published:true,question:'How long does it take to build a house?',answer:'Most homes are completed in 60 to 70 days from foundation to handover.'},
+{id:'q2',sort_order:2,published:true,question:'Is timber-frame durable?',answer:'Yes. Properly built frames last for generations and are resistant to cracks and settling.'},
+{id:'q3',sort_order:3,published:true,question:'Can I customise a catalog project?',answer:'Absolutely. Every catalog design can be adjusted for layout, finishes and size.'},
+{id:'q4',sort_order:4,published:true,question:'What warranty do you offer?',answer:'We provide a 7-year structural warranty plus yearly inspections.'},
+{id:'q5',sort_order:5,published:true,question:'Do you help with financing?',answer:'We work with partner banks and can guide you through loans and subsidies.'}]};
 export const defaultSubmissions={inquiries:[{id:'i1',created_at:'2026-10-01T10:00:00Z',status:'new',name:'Anna Lee',email:'anna@example.com',phone:'+1 555 0101',message:'I would like a quote for a 900 sq ft house.'}]};
