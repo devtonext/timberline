@@ -37,7 +37,7 @@ export const PAGES={
   {title:'Header menu',hint:'Links in the top navigation. Use /path for pages or https://… for external sites.',collections:[['header_menu','Header links']]},
   {title:'Footer menus',hint:'Each link belongs to a column. Links with the same column name are grouped together.',collections:[['footer_menu','Footer links']]}]},
  site:{label:'Brand & SEO',path:'/',sections:[
-  {title:'Brand & theme',content:[['general','Brand & theme',[['brand','Brand name',T],['brand_sub','Brand suffix',T],['tagline','Tagline',T],['primary_color','Primary colour','color'],['accent_color','Accent colour','color'],['announcement_on','Show announcement bar','boolean'],['announcement_text','Announcement text',T],['announcement_link','Announcement link',T],['footer_text','Footer text',T]]]]},
+  {title:'Brand & theme',content:[['general','Brand & theme',[['brand','Brand name',T],['brand_sub','Brand suffix',T],['tagline','Tagline',T],['header_cta_label','Header button label',T],['header_cta_link','Header button link',T],['primary_color','Primary colour','color'],['accent_color','Accent colour','color'],['announcement_on','Show announcement bar','boolean'],['announcement_text','Announcement text',T],['announcement_link','Announcement link',T],['footer_text','Footer text',T]]]]},
   {title:'SEO',content:[['seo','SEO',[['meta_title','Meta title',T],['meta_description','Meta description',A],['og_image','Share image',I]]]]}]}};
 export const COLLECTIONS={
  projects:{label:'Projects',title:'title',img:'image',fields:[['title','Title',T],['category','Category (e.g. Modern)',T],['price','Price',T],['description','Description',A],['image','Image',I]]},

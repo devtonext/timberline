@@ -1,6 +1,6 @@
 const img=(id,w=900)=>`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
 export const defaultContent={
-general:{brand:'Timberline',brand_sub:'HOMES',tagline:'Timber-frame homes',primary_color:'#2a2c2f',accent_color:'#c8844a',announcement_on:false,announcement_text:'Spring offer: free site survey',announcement_link:'/contact',footer_text:'© 2026 Timberline Homes. All rights reserved.'},
+general:{brand:'Timberline',brand_sub:'HOMES',tagline:'Timber-frame homes',header_cta_label:'Request a quote',header_cta_link:'/contact',primary_color:'#2a2c2f',accent_color:'#c8844a',announcement_on:false,announcement_text:'Spring offer: free site survey',announcement_link:'/contact',footer_text:'© 2026 Timberline Homes. All rights reserved.'},
 seo:{meta_title:'Timberline Homes — Timber-frame houses, turnkey in 2 months',meta_description:'Energy-efficient timber-frame homes built turnkey in as little as 2 months.',og_image:img('photo-1568605114967-8130f3a36994',1200)},
 contact:{phone:'+1 (555) 989-9889',email:'hello@timberline.demo',address:'12 Pine Ridge Road, Portland, OR',hours:'Mon–Fri 9:00–18:00',map_embed_url:'',instagram:'#',facebook:'#'},
 hero:{title:'A ready timber-frame home\nfrom 1,100 sq ft, turnkey in 2 months',text:'We build thoughtful, eco-friendly homes with high energy efficiency for comfortable family living.',cta_label:'Request a quote',cta_link:'/contact',image:img('photo-1449844908441-8829872d2607',1000)},
