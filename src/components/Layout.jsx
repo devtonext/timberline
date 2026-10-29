@@ -13,7 +13,10 @@ export default function Layout(){const{content:c,collections:k,ready}=useSite();
  <a className="wpill" href={'tel:'+ct.phone}><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.3"><path d="M3 1.5h1.8l.8 2.2-1.1.8a6 6 0 0 0 2.5 2.5l.8-1.1 2.2.8V8.5A1.5 1.5 0 0 1 8.5 10 7 7 0 0 1 2 3.5 1.5 1.5 0 0 1 3 1.5Z"/></svg>{ct.phone}</a></div>
  <button className="burger" aria-label="Menu" onClick={()=>setOpen(!open)}>☰</button></header>
  <main id="main"><Outlet/></main>
- <footer className="foot"><div><b>{g.brand}</b> {g.brand_sub}<p>{g.tagline}</p><p>{ct.address}<br/>{ct.hours}</p></div>
- {groups.map(n=><div key={n}><b>{n}</b>{k.footer_menu.filter(x=>x.group_name===n).map(x=><SmartLink key={x.id} to={x.url}>{x.label}</SmartLink>)}</div>)}
- <div><b>Contact</b><a href={'mailto:'+ct.email}>{ct.email}</a><a href={'tel:'+ct.phone}>{ct.phone}</a></div>
- <p className="copy">{g.footer_text} · <Link to="/admin">Admin</Link></p></footer></div>}
+ <footer className="sfoot"><div className="sf-top">
+ <div className="sf-brand"><Link to="/" className="sf-logo"><b>{g.brand}</b><b>{g.brand_sub}</b></Link><p>{g.tagline}</p>
+ <SmartLink to={g.header_cta_link||'/contact'} className="pill light">{g.header_cta_label||'Request a quote'} <i aria-hidden="true"/></SmartLink></div>
+ {groups.map(n=><div className="sf-col" key={n}><h4>{n}</h4>{k.footer_menu.filter(x=>x.group_name===n).map(x=><SmartLink key={x.id} to={x.url}>{x.label}</SmartLink>)}</div>)}
+ <div className="sf-col"><h4>Contact</h4><a href={'mailto:'+ct.email}>{ct.email}</a><a href={'tel:'+ct.phone}>{ct.phone}</a><span>{ct.address}</span><span>{ct.hours}</span></div></div>
+ <div className="sf-bot"><span>{g.footer_text}</span><span className="sf-r"><a href={ct.instagram} target="_blank" rel="noreferrer">Instagram</a><a href={ct.facebook} target="_blank" rel="noreferrer">Facebook</a><Link to="/admin">Admin</Link>
+ <button className="totop" aria-label="Back to top" onClick={()=>window.scrollTo({top:0,behavior:'smooth'})}>↑</button></span></div></footer></div>}

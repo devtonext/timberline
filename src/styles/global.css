@@ -111,3 +111,14 @@ a{color:inherit;text-decoration:none}:focus-visible{outline:2px solid var(--acce
 .form-card label{color:#ffffffd0;font-weight:500;font-size:12px}.form-card .in{background:#fff;color:#222;border:0;border-radius:16px;margin:0}.form-card .in:focus{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 45%,transparent)}
 .form-card .pill{background:var(--accent);color:#fff;justify-content:space-between;min-width:190px;margin-top:6px;box-shadow:none}.form-card .pill:hover{background:color-mix(in srgb,var(--accent) 85%,#fff)}.form-card .err{color:#ffa89c}
 @media(max-width:860px){.form-card{padding:32px 24px}.ig{grid-template-columns:1fr}}
+/* ---------- footer ---------- */
+.sfoot{margin-top:64px;background:linear-gradient(145deg,#34373b,#1c1e21);border-radius:40px;color:#fff;padding:56px 56px 28px}
+.sf-top{display:grid;grid-template-columns:1.7fr;grid-auto-flow:column;grid-auto-columns:1fr;gap:40px}
+.sf-logo{display:block;margin-bottom:18px}.sf-logo b{display:block;font-size:22px;font-weight:800;letter-spacing:-.04em;text-transform:lowercase;line-height:.95}
+.sf-brand p{color:#a9acb0;max-width:300px;margin:0 0 24px}
+.sf-col{display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:1.5;color:#a9acb0}.sf-col h4{margin:0 0 6px;color:#fff;font-size:13px;font-weight:600}
+.sf-col a{width:fit-content;transition:color .25s,transform .25s}.sf-col a:hover{color:#fff;transform:translateX(4px)}
+.sf-bot{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:56px;font-size:12px;color:#8e9195;flex-wrap:wrap}
+.sf-r{display:flex;gap:22px;align-items:center}.sf-r a{transition:color .25s}.sf-r a:hover{color:#fff}
+.totop{width:40px;height:40px;border-radius:50%;border:0;background:#ffffff1a;color:#fff;cursor:pointer;font-size:16px;transition:transform .3s,background .3s}.totop:hover{background:var(--accent);transform:translateY(-4px)}
+@media(max-width:860px){.sfoot{padding:36px 24px 24px;border-radius:30px}.sf-top{grid-auto-flow:row;grid-template-columns:1fr 1fr;gap:30px}.sf-brand{grid-column:1/-1}.sf-bot{margin-top:36px}}
