@@ -3,7 +3,7 @@ export const Lines=({text,as:T='span'})=><T>{String(text||'').split('\n').map((l
 export const SmartLink=({to,children,...p})=>/^(https?:|mailto:|tel:)/.test(to)?<a href={to} target={/^https?:/.test(to)?'_blank':undefined} rel="noreferrer" {...p}>{children}</a>:<Link to={to||'/'} {...p}>{children}</Link>;
 export default function Layout(){const{content:c,collections:k,ready}=useSite();const[open,setOpen]=useState(false);const{pathname}=useLocation();const g=c.general,ct=c.contact;
  const groups=[...new Set(k.footer_menu.map(x=>x.group_name))];
- useEffect(()=>{window.scrollTo(0,0);const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.06});
+ useEffect(()=>{window.scrollTo(0,0);const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('shown');io.unobserve(e.target)}}),{threshold:.06});
   document.querySelectorAll('main section').forEach(el=>{el.classList.add('rv');io.observe(el)});return()=>io.disconnect()},[pathname,ready]);
  return <div className="shell"><a className="skip" href="#main">Skip to content</a>
  {g.announcement_on&&<SmartLink to={g.announcement_link} className="announce">{g.announcement_text}</SmartLink>}

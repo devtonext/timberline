@@ -6,7 +6,7 @@ export default function Home(){const{content:c,collections:k}=useSite();const h=
   <SmartLink to={h.cta_link} className="pill dark">{h.cta_label} <i aria-hidden="true"></i></SmartLink>
   <div className="stats">{k.stats.map(s=><div className="stat" key={s.id}><img src={s.image} alt=""/><b>{s.value}<em>{s.suffix}</em></b><span>{s.label}</span></div>)}</div></div>
   <div className="hero-r"><img src={h.image} alt="Timber-frame house"/></div></section>
- <section className="tech"><div><Lines as="h2" text={t.title}/><p>{t.text}</p><img className="frame" src={t.image} alt="Timber frame structure"/></div>
+ <section className="tech"><div className="tech-l"><Lines as="h2" text={t.title}/><p>{t.text}</p><img className="frame" src={t.image} alt="Timber frame structure"/></div>
   <div className="feats">{k.features.map(f=><div className="dcard" key={f.id}><img src={f.image} alt=""/><div><b>{f.title}</b><p>{f.text}</p></div></div>)}</div></section>
  <section className="panel catalog"><div className="cat-h"><Lines as="h2" text={cat.title}/><div><b>{cat.side_title}</b><small>{cat.side_sub}</small></div></div>
   <div className="track" ref={tr}>{k.projects.map(p=><article key={p.id} className="proj"><img src={p.image} alt={p.title}/><div><b>{p.title}</b><small>{p.price}</small></div></article>)}</div>

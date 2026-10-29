@@ -32,7 +32,7 @@ export const PAGES={
   {title:'Testimonials',content:[['testimonials_sec','Testimonials heading',[['title','Heading',T]]]],collections:[['testimonials','Testimonials']]},
   {title:'FAQ',content:[['faq_sec','FAQ heading',[['title','Heading',T]]]],collections:[['faqs','Questions']]},
   {title:'Call to action',content:[cta]}]},
- contact:{label:'Contact details',path:'/contact',sections:[{title:'Contact details',content:[['contact','Contact details',[['phone','Phone',T],['email','Email',T],['address','Address',T],['hours','Opening hours',T],['instagram','Instagram URL',T],['facebook','Facebook URL',T]]]]}]},
+ contact:{label:'Contact details',path:'/contact',sections:[{title:'Intro & form',content:[['contact_page','Contact page text',[['title','Heading',A],['text','Text',A],['form_title','Form title',T],['form_text','Form text',A]]]]},{title:'Contact details',content:[['contact','Contact details',[['phone','Phone',T],['email','Email',T],['address','Address',T],['hours','Opening hours',T],['instagram','Instagram URL',T],['facebook','Facebook URL',T]]]]}]},
  menus:{label:'Menus',path:'/',sections:[
   {title:'Header menu',hint:'Links in the top navigation. Use /path for pages or https://… for external sites.',collections:[['header_menu','Header links']]},
   {title:'Footer menus',hint:'Each link belongs to a column. Links with the same column name are grouped together.',collections:[['footer_menu','Footer links']]}]},
